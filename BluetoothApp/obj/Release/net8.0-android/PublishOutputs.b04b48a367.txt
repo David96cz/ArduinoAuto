@@ -1,0 +1,4 @@
+/Users/davidpetrak/Desktop/BTAPP/publish/com.companyname.bluetoothapp-Signed.aab
+/Users/davidpetrak/Desktop/BTAPP/publish/com.companyname.bluetoothapp.aab
+/Users/davidpetrak/Desktop/BTAPP/publish/com.companyname.bluetoothapp-Signed.apk
+/Users/davidpetrak/Desktop/BTAPP/publish/_Microsoft.Android.Resource.Designer.dll

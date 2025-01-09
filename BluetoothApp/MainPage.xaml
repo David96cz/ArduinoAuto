@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="BluetoothApp.MainPage"
+             BackgroundColor="{DynamicResource PageBackgroundColor}">
+
+    <StackLayout Padding="20" VerticalOptions="Center">
+        <Label Text="Připojení k Bluetooth HC-05"
+               FontSize="24"
+               HorizontalOptions="Center" />
+        
+        <Button x:Name="ConnectButton"
+                Text="Připojit k HC-05"
+                Clicked="OnConnectButtonClicked"
+                HorizontalOptions="Center"
+                VerticalOptions="CenterAndExpand" />
+        
+        <Label x:Name="StatusLabel"
+               Text="Status: Čekám na připojení..."
+               FontSize="18"
+               HorizontalOptions="Center" />
+
+        <!-- Tlačítka pro zapnutí a vypnutí LED -->
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+            <Button Text="Zapnout LED" Clicked="OnTurnOnLedClicked"  HorizontalOptions="Center"/>
+            <Button Text="Vypnout LED" Clicked="OnTurnOffLedClicked" HorizontalOptions="Center"/>
+        </StackLayout>
+    </StackLayout>
+
+</ContentPage>
