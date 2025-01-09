@@ -66,21 +66,22 @@ namespace BluetoothApp
         }
 
         // Připojení k Bluetooth zařízení
+        // Po úspěšném připojení přejděte na ovládací stránku
         private async void ConnectToDevice()
         {
             try
             {
-                // UUID pro SPP profil
                 var uuid = UUID.FromString("00001101-0000-1000-8000-00805F9B34FB"); // Serial Port Profile (SPP)
                 _bluetoothSocket = _bluetoothDevice.CreateRfcommSocketToServiceRecord(uuid);
-
-                // Pokus o připojení
                 await _bluetoothSocket.ConnectAsync();
 
                 if (_bluetoothSocket.IsConnected)
                 {
+                    // Skrytí overlay a zobrazení ovládání
+                    OverlayLayer.IsVisible = false;
+                    ControlLayer.IsVisible = true;
+
                     await DisplayAlert("Úspěch", "Připojeno k zařízení HC-05!", "OK");
-                    StatusLabel.Text = "Status: Připojeno";
                 }
             }
             catch (Exception ex)
@@ -89,15 +90,25 @@ namespace BluetoothApp
             }
         }
 
-		private void OnTurnOnLedClicked(object sender, EventArgs e)
-		{
-			SendDataToHC05("1");
-		}
+        private async void OnForwardButtonClicked(object sender, EventArgs e)
+        {
+            await SendDataToHC05("F"); // F = Forward
+        }
 
-		private void OnTurnOffLedClicked(object sender, EventArgs e)
-		{
-			SendDataToHC05("0");
-		}
+        private async void OnBackwardButtonClicked(object sender, EventArgs e)
+        {
+            await SendDataToHC05("B"); // B = Backward
+        }
+
+        private async void OnLeftButtonClicked(object sender, EventArgs e)
+        {
+            await SendDataToHC05("L"); // L = Left
+        }
+
+        private async void OnRightButtonClicked(object sender, EventArgs e)
+        {
+            await SendDataToHC05("R"); // R = Right
+        }
 
         // Příklad odesílání dat na HC-05
         private async Task SendDataToHC05(string message)
@@ -114,21 +125,32 @@ namespace BluetoothApp
             }
         }
 
-        // Příklad čtení dat z HC-05
-        private async Task ReadDataFromHC05()
-        {
-            try
-            {
-                var inputStream = _bluetoothSocket.InputStream;
-                byte[] buffer = new byte[1024];
-                int bytesRead = await inputStream.ReadAsync(buffer, 0, buffer.Length);
-                string message = System.Text.Encoding.ASCII.GetString(buffer, 0, bytesRead);
-                // Zpracování přijatých dat
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Chyba", $"Chyba při čtení dat: {ex.Message}", "OK");
-            }
-        }
+
+        // private void OnTurnOnLedClicked(object sender, EventArgs e)
+		// {
+		// 	SendDataToHC05("1");
+		// }
+
+		// private void OnTurnOffLedClicked(object sender, EventArgs e)
+		// {
+		// 	SendDataToHC05("0");
+		// }
+
+        // // Příklad čtení dat z HC-05
+        // private async Task ReadDataFromHC05()
+        // {
+        //     try
+        //     {
+        //         var inputStream = _bluetoothSocket.InputStream;
+        //         byte[] buffer = new byte[1024];
+        //         int bytesRead = await inputStream.ReadAsync(buffer, 0, buffer.Length);
+        //         string message = System.Text.Encoding.ASCII.GetString(buffer, 0, bytesRead);
+        //         // Zpracování přijatých dat
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         await DisplayAlert("Chyba", $"Chyba při čtení dat: {ex.Message}", "OK");
+        //     }
+        // }
     }
 }

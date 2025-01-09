@@ -2,29 +2,60 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="BluetoothApp.MainPage"
-             BackgroundColor="{DynamicResource PageBackgroundColor}">
+             BackgroundColor="{DynamicResource PageBackgroundColor}"
+             Shell.NavBarIsVisible="False">
 
-    <StackLayout Padding="20" VerticalOptions="Center">
-        <Label Text="Připojení k Bluetooth HC-05"
-               FontSize="24"
-               HorizontalOptions="Center" />
-        
-        <Button x:Name="ConnectButton"
-                Text="Připojit k HC-05"
-                Clicked="OnConnectButtonClicked"
-                HorizontalOptions="Center"
-                VerticalOptions="CenterAndExpand" />
-        
-        <Label x:Name="StatusLabel"
-               Text="Status: Čekám na připojení..."
-               FontSize="18"
-               HorizontalOptions="Center" />
+    <Grid>
+        <!-- Úvodní vrstva (Overlay) -->
+        <Grid x:Name="OverlayLayer">
+            <StackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+                <Label Text="Připojení k autu"
+                       FontSize="24"
+                       HorizontalOptions="Center" 
+                       Padding="10"/>
+                <Button
+                    Text="Připojit"
+                    Clicked="OnConnectButtonClicked"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"/>
+            </StackLayout>
+        </Grid>
 
-        <!-- Tlačítka pro zapnutí a vypnutí LED -->
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-            <Button Text="Zapnout LED" Clicked="OnTurnOnLedClicked"  HorizontalOptions="Center"/>
-            <Button Text="Vypnout LED" Clicked="OnTurnOffLedClicked" HorizontalOptions="Center"/>
+        <!-- Vrstva pro ovládání auta (skrytá na začátku) -->
+        <StackLayout x:Name="ControlLayer" IsVisible="False" Padding="20" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+            <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="Auto, Auto, Auto">
+                <!-- Tlačítka pro ovládání auta - Rozmístění v Gridu -->
+                
+                <!-- Dopředu -->
+                <Button x:Name="ForwardButton"
+                        Text="Dopředu"
+                        Clicked="OnForwardButtonClicked"
+                        Grid.Row="0" Grid.Column="1"
+                        HorizontalOptions="Center" VerticalOptions="Center" />
+
+                <!-- Dozadu -->
+                <Button x:Name="BackwardButton"
+                        Text="Dozadu"
+                        Clicked="OnBackwardButtonClicked"
+                        Grid.Row="2" Grid.Column="1"
+                        HorizontalOptions="Center" VerticalOptions="Center" />
+                
+                <!-- Doleva -->
+                <Button x:Name="LeftButton"
+                        Text="Doleva"
+                        Clicked="OnLeftButtonClicked"
+                        Grid.Row="1" Grid.Column="0"
+                        HorizontalOptions="Center" VerticalOptions="Center" />
+                
+                <!-- Doprava -->
+                <Button x:Name="RightButton"
+                        Text="Doprava"
+                        Clicked="OnRightButtonClicked"
+                        Grid.Row="1" Grid.Column="2"
+                        HorizontalOptions="Center" VerticalOptions="Center" />
+            </Grid>
         </StackLayout>
-    </StackLayout>
+
+    </Grid>
 
 </ContentPage>
