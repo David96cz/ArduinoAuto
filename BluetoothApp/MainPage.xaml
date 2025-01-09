@@ -8,9 +8,10 @@
     <Grid>
         <!-- Úvodní vrstva (Overlay) -->
         <Grid x:Name="OverlayLayer">
+            <Image
+                Source="pozadi.jpg"
+                Opacity="0.2"/>
             <StackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand" >
-                <Image
-                    Source="pozadi.jpg"/>
                 <Label Text="Připojení k autu"
                        FontSize="24"
                        HorizontalOptions="Center" 
