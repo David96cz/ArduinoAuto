@@ -109,8 +109,8 @@ target triple = "i686-unknown-linux-android21"
 	i32 2, ; uint32_t number_of_assembly_store_files (0x2)
 	i32 480, ; uint32_t number_of_dso_cache_entries (0x1e0)
 	i32 33555139, ; uint32_t android_runtime_jnienv_class_token (0x20002c3)
-	i32 100670650, ; uint32_t jnienv_initialize_method_token (0x6001cba)
-	i32 100670649, ; uint32_t jnienv_registerjninatives_method_token (0x6001cb9)
+	i32 100670651, ; uint32_t jnienv_initialize_method_token (0x6001cbb)
+	i32 100670650, ; uint32_t jnienv_registerjninatives_method_token (0x6001cba)
 	i32 0, ; uint32_t jni_remapping_replacement_type_count (0x0)
 	i32 0, ; uint32_t jni_remapping_replacement_method_index_entry_count (0x0)
 	i32 0, ; uint32_t mono_components_mask (0x0)
@@ -3015,14 +3015,14 @@ target triple = "i686-unknown-linux-android21"
 @.env.0 = private unnamed_addr constant [15 x i8] c"MONO_GC_PARAMS\00", align 1
 @.env.1 = private unnamed_addr constant [21 x i8] c"major=marksweep-conc\00", align 1
 @.env.2 = private unnamed_addr constant [17 x i8] c"XAMARIN_BUILD_ID\00", align 1
-@.env.3 = private unnamed_addr constant [37 x i8] c"fee0534b-3beb-4600-a8d9-89a41006fef1\00", align 1
+@.env.3 = private unnamed_addr constant [37 x i8] c"caf0523a-8a73-4998-8dfc-f25ea50a08b3\00", align 1
 @.env.4 = private unnamed_addr constant [28 x i8] c"XA_HTTP_CLIENT_HANDLER_TYPE\00", align 1
 @.env.5 = private unnamed_addr constant [42 x i8] c"Xamarin.Android.Net.AndroidMessageHandler\00", align 1
 @.env.6 = private unnamed_addr constant [29 x i8] c"__XA_PACKAGE_NAMING_POLICY__\00", align 1
 @.env.7 = private unnamed_addr constant [15 x i8] c"LowercaseCrc64\00", align 1
 
 ;ApplicationConfig
-@.ApplicationConfig.0_android_package_name = private unnamed_addr constant [29 x i8] c"com.companyname.bluetoothapp\00", align 1
+@.ApplicationConfig.0_android_package_name = private unnamed_addr constant [30 x i8] c"Petza_Software.Petza_Software\00", align 1
 
 ;DSOCacheEntry
 @.DSOCacheEntry.0_name = private unnamed_addr constant [35 x i8] c"libSystem.IO.Compression.Native.so\00", align 1
@@ -3113,7 +3113,7 @@ target triple = "i686-unknown-linux-android21"
 !0 = !{i32 1, !"wchar_size", i32 4}
 !1 = !{i32 7, !"PIC Level", i32 2}
 !llvm.ident = !{!2}
-!2 = !{!"Xamarin.Android remotes/origin/release/8.0.2xx @ 96b6bb65e8736e45180905177aa343f0e1854ea3"}
+!2 = !{!"Xamarin.Android remotes/origin/release/8.0.4xx @ df9aaf29a52042a4fbf800daf2f3a38964b9e958"}
 !3 = !{!4, !4, i64 0}
 !4 = !{!"any pointer", !5, i64 0}
 !5 = !{!"omnipotent char", !6, i64 0}

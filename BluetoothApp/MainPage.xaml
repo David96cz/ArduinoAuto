@@ -7,57 +7,100 @@
 
     <Grid>
         <!-- Úvodní vrstva (Overlay) -->
-        <Grid x:Name="OverlayLayer">
+        <Grid x:Name="OverlayLayer"
+                IsVisible="true">
             <Image
                 Source="pozadi.jpg"
                 Opacity="0.2"/>
-            <StackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand" >
+            <StackLayout HorizontalOptions="Center"
+                    VerticalOptions="CenterAndExpand">
                 <Label Text="Připojení k autu"
                        FontSize="24"
-                       HorizontalOptions="Center" 
+                       HorizontalOptions="Center"
                        Padding="10"/>
                 <Button
                     Text="Připojit"
                     Clicked="OnConnectButtonClicked"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"/>
+                <!-- Točící se kolečko -->
+                <ActivityIndicator
+                    x:Name="LoadingIndicator"
+                    IsRunning="False"
+                    IsVisible="False"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"/>
             </StackLayout>
+            
         </Grid>
 
-        <!-- Vrstva pro ovládání auta (skrytá na začátku) -->
-        <StackLayout x:Name="ControlLayer" IsVisible="False" Padding="20" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
-            <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="Auto, Auto, Auto">
-                <!-- Tlačítka pro ovládání auta - Rozmístění v Gridu -->
-                
-                <!-- Dopředu -->
-                <Button x:Name="ForwardButton"
-                        Text="Dopředu"
-                        Clicked="OnForwardButtonClicked"
-                        Grid.Row="0" Grid.Column="1"
-                        HorizontalOptions="Center" VerticalOptions="Center" />
+        <!-- Vrstva pro ovládání auta -->
+        <Grid x:Name="ControlLayer"
+              IsVisible="false">
+            <StackLayout Padding="20">
+                <Label 
+                    Text="Status: Připojeno"
+                    HorizontalOptions="Center"/>
 
-                <!-- Dozadu -->
-                <Button x:Name="BackwardButton"
-                        Text="Dozadu"
-                        Clicked="OnBackwardButtonClicked"
-                        Grid.Row="2" Grid.Column="1"
-                        HorizontalOptions="Center" VerticalOptions="Center" />
-                
-                <!-- Doleva -->
-                <Button x:Name="LeftButton"
-                        Text="Doleva"
-                        Clicked="OnLeftButtonClicked"
-                        Grid.Row="1" Grid.Column="0"
-                        HorizontalOptions="Center" VerticalOptions="Center" />
-                
-                <!-- Doprava -->
-                <Button x:Name="RightButton"
-                        Text="Doprava"
-                        Clicked="OnRightButtonClicked"
-                        Grid.Row="1" Grid.Column="2"
-                        HorizontalOptions="Center" VerticalOptions="Center" />
-            </Grid>
-        </StackLayout>
+                <Button
+                    Text="Odpojit"
+                    HorizontalOptions="CenterAndExpand"
+                    Clicked="OnDisconnectButtonClicked"/>
+                <AbsoluteLayout HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand">
+                    <!-- Vertikální tlačítka - Dopředu a Dozadu, vlevo dole -->
+                    <VerticalStackLayout AbsoluteLayout.LayoutBounds="0,1,AutoSize,AutoSize"
+                                         AbsoluteLayout.LayoutFlags="PositionProportional"
+                                         HorizontalOptions="Start"
+                                         VerticalOptions="End"
+                                         Spacing="10" 
+                        Padding="10">
+                        <!-- Vnitřní okraje pro tlačítka -->
+                        <Button x:Name="ForwardButton"
+                                Text="Dopředu"
+                                Pressed="OnForwardButtonPressed"
+                                Released="OnButtonReleased"
+                                WidthRequest="100" 
+                            HeightRequest="100"
+                            HorizontalOptions="FillAndExpand" />
+                            <!-- Využije dostupnou šířku -->
+
+                            <Button x:Name="BackwardButton"
+                                    Text="Dozadu"
+                                    Pressed="OnBackwardButtonPressed"
+                                    Released="OnButtonReleased"
+                                    WidthRequest="100"
+                                    HeightRequest="100"
+                                    HorizontalOptions="FillAndExpand"/>
+                    </VerticalStackLayout>
+
+                    <!-- Horizontální tlačítka - Doleva a Doprava, vpravo dole -->
+                    <HorizontalStackLayout AbsoluteLayout.LayoutBounds="1,1,AutoSize,AutoSize"
+                                           AbsoluteLayout.LayoutFlags="PositionProportional"
+                                           HorizontalOptions="End"
+                                           VerticalOptions="End"
+                                           Spacing="10"
+                                           Padding="10,0,0,68">
+                        <Button x:Name="LeftButton"
+                                Text="Doleva"
+                                Pressed="OnLeftButtonPressed"
+                                Released="OnButtonReleased"
+                                WidthRequest="100"
+                                HeightRequest="100"
+                                HorizontalOptions="FillAndExpand"/>
+
+                        <Button x:Name="RightButton"
+                                Text="Doprava"
+                                Pressed="OnRightButtonPressed"
+                                Released="OnButtonReleased"
+                                WidthRequest="100"
+                                HeightRequest="100"
+                                HorizontalOptions="FillAndExpand"/>
+                    </HorizontalStackLayout>
+                </AbsoluteLayout>
+
+            </StackLayout>
+        </Grid>
 
     </Grid>
 

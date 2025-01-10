@@ -36,13 +36,13 @@ namespace BluetoothApp
             }
         }
 
-        // Event handler pro připojení k HC-05
         private void OnConnectButtonClicked(object sender, EventArgs e)
         {
-            ConnectToHC05();
+            LoadingIndicator.IsVisible = true;
+            LoadingIndicator.IsRunning = true;
+            ConnectToHC05();     
         }
 
-        // Připojení k HC-05
         private void ConnectToHC05()
         {
             if (_bluetoothAdapter == null || !_bluetoothAdapter.IsEnabled)
@@ -65,8 +65,6 @@ namespace BluetoothApp
             ConnectToDevice();
         }
 
-        // Připojení k Bluetooth zařízení
-        // Po úspěšném připojení přejděte na ovládací stránku
         private async void ConnectToDevice()
         {
             try
@@ -78,10 +76,11 @@ namespace BluetoothApp
                 if (_bluetoothSocket.IsConnected)
                 {
                     // Skrytí overlay a zobrazení ovládání
+                    // Skrytí kolečka po připojení nebo chybě
+                    LoadingIndicator.IsVisible = false;
+                    LoadingIndicator.IsRunning = false;
                     OverlayLayer.IsVisible = false;
                     ControlLayer.IsVisible = true;
-
-                    await DisplayAlert("Úspěch", "Připojeno k zařízení HC-05!", "OK");
                 }
             }
             catch (Exception ex)
@@ -90,29 +89,28 @@ namespace BluetoothApp
             }
         }
 
-        private async void OnForwardButtonClicked(object sender, EventArgs e)
+        private async void OnDisconnectButtonClicked(object sender, EventArgs e)
         {
-            await SendDataToHC05("F"); // F = Forward
+            try
+            {
+                _bluetoothSocket.Close();
+                OverlayLayer.IsVisible = true;
+                ControlLayer.IsVisible = false;
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Chyba", $"Chyba při odpojování: {ex}", "OK");
+            }
         }
 
-        private async void OnBackwardButtonClicked(object sender, EventArgs e)
-        {
-            await SendDataToHC05("B"); // B = Backward
-        }
-
-        private async void OnLeftButtonClicked(object sender, EventArgs e)
-        {
-            await SendDataToHC05("L"); // L = Left
-        }
-
-        private async void OnRightButtonClicked(object sender, EventArgs e)
-        {
-            await SendDataToHC05("R"); // R = Right
-        }
-
-        // Příklad odesílání dat na HC-05
         private async Task SendDataToHC05(string message)
         {
+            if (_bluetoothSocket == null || !_bluetoothSocket.IsConnected)
+            {
+                await DisplayAlert("Chyba", "Bluetooth není připojeno.", "OK");
+                return;
+            }
+
             try
             {
                 var outputStream = _bluetoothSocket.OutputStream;
@@ -124,33 +122,41 @@ namespace BluetoothApp
                 await DisplayAlert("Chyba", $"Chyba při odesílání dat: {ex.Message}", "OK");
             }
         }
+        private async void OnButtonPressed(object sender, EventArgs e, string command)
+        {
+            try
+            {
+                // Odeslat příkaz podle parametru při stisknutí tlačítka
+                await SendDataToHC05(command);
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Chyba", $"Chyba při odesílání: {ex.Message}", "OK");
+            }
+        }
+        private void OnForwardButtonPressed(object sender, EventArgs e)
+        {
+            OnButtonPressed(sender, e, "1");
+        }
 
+        private void OnBackwardButtonPressed(object sender, EventArgs e)
+        {
+            OnButtonPressed(sender, e, "2");
+        }
 
-        // private void OnTurnOnLedClicked(object sender, EventArgs e)
-		// {
-		// 	SendDataToHC05("1");
-		// }
+        private void OnLeftButtonPressed(object sender, EventArgs e)
+        {
+            OnButtonPressed(sender, e, "3");
+        }
 
-		// private void OnTurnOffLedClicked(object sender, EventArgs e)
-		// {
-		// 	SendDataToHC05("0");
-		// }
+        private void OnRightButtonPressed(object sender, EventArgs e)
+        {
+            OnButtonPressed(sender, e, "4");
+        }
 
-        // // Příklad čtení dat z HC-05
-        // private async Task ReadDataFromHC05()
-        // {
-        //     try
-        //     {
-        //         var inputStream = _bluetoothSocket.InputStream;
-        //         byte[] buffer = new byte[1024];
-        //         int bytesRead = await inputStream.ReadAsync(buffer, 0, buffer.Length);
-        //         string message = System.Text.Encoding.ASCII.GetString(buffer, 0, bytesRead);
-        //         // Zpracování přijatých dat
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         await DisplayAlert("Chyba", $"Chyba při čtení dat: {ex.Message}", "OK");
-        //     }
-        // }
+        private void OnButtonReleased(object sender, EventArgs e)
+        {
+            OnButtonPressed(sender, e, "0");
+        }
     }
 }
